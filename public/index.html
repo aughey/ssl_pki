@@ -1,0 +1,37 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css">
+<script src="jquery-2.2.4.min.js"></script>
+<script src="jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+
+<div data-role="page">
+
+	<div data-role="header">
+		<h1>Aughey Home</h1>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+<ul id='switches' data-role="listview" data-inset="true" data-filter="true" data-input="#filter-for-listview">
+    <li>
+<form>
+    <label for="flip-checkbox-1">Family Room Light:</label>
+    <input x10id="1" type="checkbox" data-role="flipswitch" name="flip-checkbox-1" id="flip-checkbox-1">
+</form>
+</li>
+
+
+</ul>
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<h4></h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+<script src="switches.js"></script>
+
+</body>
+</html>

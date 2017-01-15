@@ -1,0 +1,36 @@
+$(function() {
+  var s = $('#switches');
+
+  s.find('input').bind('change',function() {
+    var s = $(this);
+    var id = s.attr('x10id');
+    var on_off = s.is(':checked') ? "on" : "off";
+    $.get("/test/" + id + "/" + on_off);
+    console.log(id);
+  });
+
+  return;
+  var li = $(s.find('li')[0]);
+  s.html("");
+
+  var switches = [
+  {
+    name: "Family Room Light",
+    id: 1
+  },
+  {
+    name: "Espresso Machine",
+    id: 3
+  }
+  ];
+  
+  var id=0;
+  switches.forEach(function(sw) {
+    var name='flip-checkbox-' + id;
+    var liclone = li.clone();
+    liclone.find('label').html(sw.name).attr('for',name);
+    s.append(liclone);
+    ++id;
+  });
+  s.change();
+})
