@@ -1,6 +1,6 @@
 $(function() {
 
-  function on_switch_change() {
+  function on_switch_changed() {
     var s = $(this);
     var id = s.attr('x10id');
     var on_off = s.is(':checked') ? "on" : "off";
@@ -45,8 +45,14 @@ setup_switches();
     var name='flip-checkbox-' + id;
     var liclone = li.clone();
     liclone.find('label').html(sw.name).attr('for',name);
-    liclone.find('input').attr('x10id',sw.x10id).attr('name',name).attr('id',name).bind('change',on_switch_change).flipswitch();
+    var input = liclone.find('input');
+    input.attr('x10id',sw.x10id).attr('name',name).attr('id',name).flipswitch().flipswitch('disable');
     s.append(liclone);
+    $.getJSON("/state/" + sw.x10id).then(function(res) {
+console.log(res);
+      input.attr('checked',res.state).flipswitch('enable').flipswitch('refresh');
+      input.bind('change',on_switch_changed);
+    });
     ++id;
   });
   s.change();

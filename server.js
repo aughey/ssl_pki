@@ -16,23 +16,45 @@ var app = express();
 
 app.use(express.static("public"));
 
+app.get("/state/:id", function(req,res) {
+   http.get({
+	hostname: 'localhost',
+	port: 3000,
+	path: "/state/" + req.params.id
+	}, function(httpres)  {
+   read_http(httpres, function(d) {
+     res.send(d);
+   });
+})
+});
+
+function read_http(res, cb) {
+  var data = "";
+        res.on('data', function(d) {
+data = data + d.toString();
+        });
+        res.on('end', function() {
+  cb(data);
+        });
+}
+
 app.get("/test/:id/:cmd", function(req,res) {
-   var cert = req.socket.getPeerCertificate().subject;
      console.log(new Date()+' '+ 
         req.connection.remoteAddress+' ' +
      req.method+' '+req.url);
+   if(req.socket.getPeerCertificate) {
+   var cert = req.socket.getPeerCertificate().subject;
    if(cert) {
      console.log('Certificate: ' + JSON.stringify(cert));
    }
+}
    http.get({
 	hostname: 'localhost',
 	port: 3000,
 	path: "/test/" + req.params.id + "/" + req.params.cmd,
 	}, function(httpres)  {
-        httpres.on('data', function(d) {
-        });
-        httpres.on('end', function() {
-         res.send("DONE");
+           read_http(httpres,function(done) {
+         res.send(done);
          console.log("Finished");
         });
    });
@@ -47,3 +69,6 @@ server.on('error', function (e) {
 
 server.listen(8443);
 console.log("running on 8443");
+
+http.createServer(app).listen(8000);
+console.log("internal on 8000");
