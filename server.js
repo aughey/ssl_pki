@@ -63,6 +63,8 @@ console.log("running on 8443");
 http.createServer(app).listen(8000);
 console.log("internal on 8000");
 
+// Read all the data from an http request and return the results
+// to the supplied callback.
 function read_http(res, cb) {
     var data = "";
     res.on('data', function(d) {
