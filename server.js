@@ -28,16 +28,6 @@ app.get("/state/:id", function(req, res) {
     })
 });
 
-function read_http(res, cb) {
-    var data = "";
-    res.on('data', function(d) {
-        data = data + d.toString();
-    });
-    res.on('end', function() {
-        cb(data);
-    });
-}
-
 app.get("/test/:id/:cmd", function(req, res) {
     console.log(new Date() + ' ' +
         req.connection.remoteAddress + ' ' +
@@ -72,3 +62,13 @@ console.log("running on 8443");
 
 http.createServer(app).listen(8000);
 console.log("internal on 8000");
+
+function read_http(res, cb) {
+    var data = "";
+    res.on('data', function(d) {
+        data = data + d.toString();
+    });
+    res.on('end', function() {
+        cb(data);
+    });
+}
